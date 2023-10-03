@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("Permission Check", "RECORD_AUDIO permission granted.")
         }
 
-        val bufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat)
+        val bufferSize = 16000
 
         val audioRecord = AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, channelConfig, audioFormat, bufferSize)
 
@@ -72,12 +72,20 @@ class MainActivity : AppCompatActivity() {
         try {
             while (audioRecord.recordingState == AudioRecord.RECORDSTATE_RECORDING && !Thread.interrupted()) {
                 val bytesRead = audioRecord.read(audioData, 0, bufferSize)
-                Log.d("RecordingThread", "Bytes read: $bytesRead")
                 if (bytesRead > 0) {
                     val py = Python.getInstance()
                     val pyObj = py.getModule("tflite")
+                    val startTime = System.currentTimeMillis()  // Mark the start time
+
                     val resultString = pyObj.callAttr("process_audio", audioData)
-                    Log.d("Prediction result", resultString.toString())
+
+                    val endTime = System.currentTimeMillis()  // Mark the end time
+
+                    val latency = endTime - startTime  // Calculate the latency
+                    if (resultString.toString() !== "Prediction Failed") {
+                        Log.d("Prediction result", resultString.toString())
+                        Log.d("Latency", "$latency ms")  // Log the latency
+                    }
                 }
             }
         } catch (e: InterruptedException) {

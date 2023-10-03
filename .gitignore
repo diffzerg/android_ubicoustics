@@ -4,3 +4,12 @@ app/src/main/res/.DS_Store
 app/.DS_Store
 app/src/main/assets/example_model.tflite
 app/src/main/python/.DS_Store
+app/src/main/.DS_Store
+.gradle/buildOutputCleanup/outputFiles.bin
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/8.0/fileHashes/fileHashes.lock
+.gradle/8.0/fileHashes/fileHashes.bin
+.gradle/8.0/executionHistory/executionHistory.lock
+.gradle/8.0/executionHistory/executionHistory.bin
+.gradle/8.0/dependencies-accessors/dependencies-accessors.lock
+.gradle/8.0/checksums/checksums.lock
