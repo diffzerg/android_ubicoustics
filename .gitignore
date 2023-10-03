@@ -1,0 +1,6 @@
+
+local.properties
+app/src/main/res/.DS_Store
+app/.DS_Store
+app/src/main/assets/example_model.tflite
+app/src/main/python/.DS_Store
