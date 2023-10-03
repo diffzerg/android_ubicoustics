@@ -4,6 +4,10 @@ import ubicoustics
 from pathlib import Path
 import tensorflow as tf
 import os
+import logging
+
+# Setup logging
+logging.basicConfig(level=logging.DEBUG)
 
 RATE = 16000
 interpreter = None
@@ -30,8 +34,12 @@ def process_audio(audio_data):
     global interpreter, input_details, output_details, label
 
     np_wav = np.frombuffer(audio_data, dtype=np.int16) / 32768.0  # Convert to [-1.0, +1.0]
-    x = waveform_to_examples(np_wav, RATE)
+    logging.debug("Audio data length: %d", len(np_wav))
+    logging.debug("First 10 audio data values: %s", np_wav[:10])
 
+    x = waveform_to_examples(np_wav, RATE)
+    logging.debug("Shape of processed audio data: %s", x.shape)
+    
     if x.shape[0] != 0:
         x = x.reshape(len(x), 96, 64, 1)
         
@@ -43,6 +51,8 @@ def process_audio(audio_data):
 
         # Get the prediction result
         pred = interpreter.get_tensor(output_details[0]['index'])
+        logging.debug("Prediction output shape: %s", pred.shape)
+        logging.debug("Prediction values: %s", pred)
 
         m = np.argmax(pred[0])
         if m < len(label):
