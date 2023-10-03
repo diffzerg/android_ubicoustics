@@ -78,11 +78,12 @@ class MainActivity : AppCompatActivity() {
                     val startTime = System.currentTimeMillis()  // Mark the start time
 
                     val resultString = pyObj.callAttr("process_audio", audioData)
-
+M
                     val endTime = System.currentTimeMillis()  // Mark the end time
 
                     val latency = endTime - startTime  // Calculate the latency
-                    if (resultString.toString() !== "Prediction Failed") {
+
+                    if (!resultString.toString().contentEquals("Prediction Failed")) {
                         Log.d("Prediction result", resultString.toString())
                         Log.d("Latency", "$latency ms")  // Log the latency
                     }
