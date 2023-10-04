@@ -7,6 +7,7 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.chaquo.python.Python
@@ -17,9 +18,17 @@ import java.nio.ByteBuffer
 class MainActivity : AppCompatActivity() {
     private var recordingThread: Thread? = null
 
+    // Declare a TextView variable
+    private lateinit var tvPredictionResult: TextView
+    private lateinit var tvLatency: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Initialize the TextView reference
+        tvPredictionResult = findViewById(R.id.tvPredictionResult)
+        tvLatency = findViewById(R.id.tvLatency)
 
         if (!Python.isStarted()) {
             Log.d("Python Initialization", "Starting Python...")
@@ -76,9 +85,8 @@ class MainActivity : AppCompatActivity() {
                     val py = Python.getInstance()
                     val pyObj = py.getModule("tflite")
                     val startTime = System.currentTimeMillis()  // Mark the start time
-
                     val resultString = pyObj.callAttr("process_audio", audioData)
-M
+
                     val endTime = System.currentTimeMillis()  // Mark the end time
 
                     val latency = endTime - startTime  // Calculate the latency
@@ -86,6 +94,11 @@ M
                     if (!resultString.toString().contentEquals("Prediction Failed")) {
                         Log.d("Prediction result", resultString.toString())
                         Log.d("Latency", "$latency ms")  // Log the latency
+
+                        runOnUiThread {
+                            tvPredictionResult.text = resultString.toString()
+                            tvLatency.text = "Latency: $latency ms"  // Update the latency TextView
+                        }
                     }
                 }
             }
