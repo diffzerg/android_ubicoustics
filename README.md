@@ -1,6 +1,6 @@
 # android_ubicoustics
 
-Overview
+## Overview
 
 <img width="217" alt="Screenshot 2023-10-11 at 7 59 27 PM" src="https://github.com/diffzerg/android_ubicoustics/assets/50289876/6cfecc45-725d-4898-a898-c45d9f5a9b7f">
 
@@ -14,7 +14,7 @@ This project integrates Python ubicoustics code directly into the Android app us
 
 Additionally, the original model was quantized using TensorFlow Lite to run in a Android mobile device. Specifically, float16 quantization was applied to reduce its size and computational requirements. As the model size is over the limit of GitHub file capacity, it should be downloaded manually in dropbox.
 
-Installation Steps
+## Installation Steps
 
 1. Download the Quantized Tensorflow Lite Model
 
