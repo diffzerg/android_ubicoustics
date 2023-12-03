@@ -12,4 +12,14 @@ Tested OS : Android 10
 
 This project integrates Python ubicoustics code directly into the Android app using the Chaquopy library. Due to incompatibility issues with the pyaudio library on Android, the microphone input code was manually implemented.
 
-Additionally, the original model was quantized using TensorFlow Lite to run in a Android mobile device. Specifically, float16 quantization was applied to reduce its size and computational requirements. As the model size is over the limit of GitHub file capacity, it should be downloaded manually in dropbox. (144.3MB -> 72.2MB)
+Additionally, the original model was quantized using TensorFlow Lite to run in a Android mobile device. Specifically, float16 quantization was applied to reduce its size and computational requirements. As the model size is over the limit of GitHub file capacity, it should be downloaded manually in dropbox.
+
+## Installation Steps
+
+1. Download the Quantized Tensorflow Lite Model
+
+download link : https://www.dropbox.com/scl/fi/cff5dwcdm5plc3lft2gvg/example_model.tflite?rlkey=6xp4i8sqs8td4ooe609gcld2g&dl=0
+
+2. Add Model to Android Project
+
+After downloading, please place the .tflite model in the following directory of your project: app/src/main/assets/
